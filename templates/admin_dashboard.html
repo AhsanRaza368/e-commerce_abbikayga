@@ -1,0 +1,124 @@
+
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard | AbbiKayGa{% endblock %}
+{% block robots %}<meta name="robots" content="noindex, nofollow">{% endblock %}
+{% block body_class %}admin-dashboard-page{% endblock %}
+{% block main_class %}section{% endblock %}
+{% block head_extra %}
+    <script src="{{ url_for('static', path='/js/admin-dashboard.js') }}" defer></script>
+{% endblock %}
+{% block navigation %}
+    <a href="/" target="_blank" rel="noopener">View marketplace</a>
+    <button id="admin-logout" type="button"
+            class="button button-secondary">Log out</button>
+{% endblock %}
+
+{% block content %}
+        <div class="container">
+            <section class="admin-welcome">
+                <span class="eyebrow">ADMINISTRATION</span>
+                <h1>Dashboard</h1>
+                <p>Manage advertisements, categories, and customer reports.</p>
+                <p id="admin-identity" class="admin-identity">Checking administrator session...</p>
+            </section>
+
+            <div id="dashboard-message" class="message" role="status"
+                 aria-live="polite" hidden></div>
+
+            <nav class="admin-tabs" aria-label="Dashboard sections">
+                <button class="admin-tab active" data-panel="listings"
+                        type="button">Pending ads</button>
+                <button class="admin-tab" data-panel="categories"
+                        type="button">Categories</button>
+                <button class="admin-tab" data-panel="reports"
+                        type="button">Reports</button>
+            </nav>
+
+            <section id="panel-listings" class="admin-panel">
+                <div class="admin-panel-heading">
+                    <div>
+                        <h2>Pending advertisements</h2>
+                        <p>Review submissions before they appear publicly.</p>
+                    </div>
+                    <button id="refresh-listings" class="button button-secondary"
+                            type="button">Refresh</button>
+                </div>
+                <div id="pending-listings" class="admin-data-area">
+                    Loading pending advertisements...
+                </div>
+            </section>
+
+            <section id="panel-categories" class="admin-panel" hidden>
+                <div class="admin-panel-heading">
+                    <div>
+                        <h2>Category management</h2>
+                        <p>Review existing categories and their availability.</p>
+                    </div>
+                    <button id="refresh-categories" class="button button-secondary"
+                            type="button">Refresh</button>
+                </div>
+                
+<form id="category-create-form" class="admin-create-form">
+    <h3>Create a category</h3>
+
+    <div class="form-row">
+        <div class="field">
+            <label for="category-name">Category name *</label>
+            <input id="category-name" name="name"
+                   required maxlength="100"
+                   placeholder="e.g. Electronics">
+        </div>
+
+        <div class="field">
+            <label for="category-slug">URL slug *</label>
+            <input id="category-slug" name="slug"
+                   required maxlength="100"
+                   pattern="[a-z0-9]+(-[a-z0-9]+)*"
+                   placeholder="e.g. electronics">
+        </div>
+    </div>
+
+    <button type="submit" class="button button-primary">
+        Create category
+    </button>
+    <div id="category-create-message" class="message"
+         role="status" aria-live="polite" hidden></div>
+</form>
+
+                <div id="admin-categories" class="admin-data-area">
+                    Loading categories...
+                </div>
+                <p class="admin-help">
+                    We will connect category creation and activation controls
+                    after confirming the exact request format supported by your API.
+                </p>
+            </section>
+
+            <section id="panel-reports" class="admin-panel" hidden>
+                <div class="admin-panel-heading">
+                    <div>
+                        <h2>Advertisement reports</h2>
+                        <p>Review reports submitted by marketplace visitors.</p>
+                    </div>
+                    <button id="refresh-reports" class="button button-secondary"
+                            type="button">Refresh</button>
+                </div>
+
+                <div class="field admin-filter">
+                    <label for="report-status-filter">Filter by status</label>
+                    <select id="report-status-filter">
+                        <option value="">All reports</option>
+                        <option value="open">Open</option>
+                        <option value="reviewed">Reviewed</option>
+                        <option value="resolved">Resolved</option>
+                        <option value="dismissed">Dismissed</option>
+                    </select>
+                </div>
+
+                <div id="admin-reports" class="admin-data-area">
+                    Loading reports...
+                </div>
+            </section>
+        </div>
+{% endblock %}

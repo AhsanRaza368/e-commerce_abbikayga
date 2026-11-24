@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Verify Email | AbbiKayGa{% endblock %}
+{% block head_extra %}
+    <script src="{{ url_for('static', path='/js/customer-auth.js') }}" defer></script>
+{% endblock %}
+{% block main_class %}admin-login-page{% endblock %}
+{% block navigation %}
+    <a class="button button-secondary" href="/">Marketplace</a>
+{% endblock %}
+
+{% block content %}
+    <section class="admin-login-card" aria-labelledby="customer-verify-title">
+        <div class="admin-login-icon" aria-hidden="true">A</div>
+        <span class="eyebrow">ONE LAST STEP</span>
+        <h1 id="customer-verify-title">Verify your email</h1>
+        <p class="admin-login-description">
+            Enter the six-digit code we emailed you to create your account.
+        </p>
+
+        <div id="signup-verify-message" class="message"
+             role="status" aria-live="polite" hidden></div>
+
+        <form id="customer-verify-form" class="admin-login-form">
+            <div class="field">
+                <label for="customer-verify-email">Email address</label>
+                <input id="customer-verify-email" name="email"
+                       type="email" maxlength="254"
+                       autocomplete="email" required
+                       placeholder="you@example.com">
+            </div>
+
+            <div class="field">
+                <label for="customer-verify-code">Six-digit verification code</label>
+                <input id="customer-verify-code" name="code"
+                       type="text" inputmode="numeric"
+                       autocomplete="one-time-code"
+                       pattern="[0-9]{6}" minlength="6" maxlength="6"
+                       required placeholder="000000">
+                <small>The code expires after 10 minutes.</small>
+            </div>
+
+            <button id="customer-verify-button" type="submit"
+                    class="button button-primary button-full">
+                Verify code and create account
+            </button>
+            <button id="customer-verify-resend" type="button"
+                    class="button button-secondary button-full">
+                Send a new code
+            </button>
+        </form>
+
+        <p class="admin-login-note">
+            Need to change your signup details?
+            <a class="admin-marketplace-link" href="/customer/signup">
+                Start signup again
+            </a>
+        </p>
+        <a href="/" class="admin-marketplace-link">Return to marketplace</a>
+    </section>
+{% endblock %}

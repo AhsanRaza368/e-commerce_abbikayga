@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Administrator Login | AbbiKayGa{% endblock %}
+{% block head_extra %}
+    <script src="{{ url_for('static', path='/js/admin-login.js') }}" defer></script>
+{% endblock %}
+{% block main_class %}admin-login-page{% endblock %}
+{% block navigation %}
+    <a class="button button-secondary" href="/">Back to marketplace</a>
+{% endblock %}
+
+{% block content %}
+    <section class="admin-login-card" aria-labelledby="login-title">
+        <div class="admin-login-icon" aria-hidden="true">A</div>
+        <span class="eyebrow">RESTRICTED ACCESS</span>
+        <h1 id="login-title">Administrator login</h1>
+        <p class="admin-login-description">
+            Sign in to manage advertisements, categories, and reports.
+        </p>
+
+        <div id="login-message" class="message message-error"
+             role="alert" aria-live="polite" hidden></div>
+
+        <form id="admin-login-form" class="admin-login-form">
+            <div class="field">
+                <label for="admin-email">Email address</label>
+                <input id="admin-email" name="email" type="email"
+                       autocomplete="username" maxlength="254"
+                       placeholder="admin@example.com" required>
+            </div>
+
+            <div class="field">
+                <label for="admin-password">Password</label>
+                <input id="admin-password" name="password" type="password"
+                       autocomplete="current-password" maxlength="128"
+                       placeholder="Enter your password" required>
+            </div>
+
+            <button id="login-button" type="submit"
+                    class="button button-primary button-full">
+                Sign in securely
+            </button>
+        </form>
+        <a href="/admin/forgot-password" class="admin-marketplace-link">
+            Forgot your password?
+        </a>
+
+        <p class="admin-login-note">
+            Authorized administrators only. Your credentials are sent
+            to the AbbiKayGa API for verification.
+        </p>
+
+        <a class="admin-marketplace-link" href="/">
+            Return to the public marketplace
+        </a>
+    </section>
+{% endblock %}

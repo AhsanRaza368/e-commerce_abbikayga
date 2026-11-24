@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Customer Login | AbbiKayGa{% endblock %}
+{% block head_extra %}
+    <script src="{{ url_for('static', path='/js/customer-auth.js') }}" defer></script>
+{% endblock %}
+{% block main_class %}admin-login-page{% endblock %}
+{% block navigation %}
+    <a class="button button-secondary" href="/">Marketplace</a>
+{% endblock %}
+
+{% block content %}
+    <section class="admin-login-card" aria-labelledby="customer-login-title">
+        <div class="admin-login-icon" aria-hidden="true">A</div>
+        <span class="eyebrow">WELCOME BACK</span>
+        <h1 id="customer-login-title">Sign in to your account</h1>
+        <p class="admin-login-description">
+            Access your AbbiKayGa customer account.
+        </p>
+
+        <div id="login-message" class="message"
+             role="status" aria-live="polite" hidden></div>
+
+        <form id="customer-login-form" class="admin-login-form">
+            <div class="field">
+                <label for="customer-login-email">Email address</label>
+                <input id="customer-login-email" name="email"
+                       type="email" maxlength="254"
+                       autocomplete="username" required
+                       placeholder="you@example.com">
+            </div>
+
+            <div class="field">
+                <label for="customer-login-password">Password</label>
+                <input id="customer-login-password" name="password"
+                       type="password" maxlength="128"
+                       autocomplete="current-password" required
+                       placeholder="Enter your password">
+            </div>
+
+            <div class="customer-auth-links">
+                <a href="/customer/forgot-password">Forgot your password?</a>
+            </div>
+
+            <button id="customer-login-button" type="submit"
+                    class="button button-primary button-full">
+                Sign in
+            </button>
+        </form>
+
+        <p class="admin-login-note">
+            Don't have an account?
+            <a class="admin-marketplace-link"
+               href="/customer/signup">Create an account</a>
+        </p>
+        <a href="/" class="admin-marketplace-link">Return to marketplace</a>
+    </section>
+{% endblock %}

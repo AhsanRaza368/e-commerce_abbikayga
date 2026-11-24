@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Create Account | AbbiKayGa{% endblock %}
+{% block head_extra %}
+    <script src="{{ url_for('static', path='/js/customer-auth.js') }}" defer></script>
+{% endblock %}
+{% block main_class %}admin-login-page{% endblock %}
+{% block navigation %}
+    <a class="button button-secondary" href="/">Marketplace</a>
+{% endblock %}
+
+{% block content %}
+    <section class="admin-login-card" aria-labelledby="customer-signup-title">
+        <div class="admin-login-icon" aria-hidden="true">A</div>
+        <span class="eyebrow">JOIN OUR COMMUNITY</span>
+        <h1 id="customer-signup-title">Create your account</h1>
+        <p class="admin-login-description">
+            Sign up to become part of the AbbiKayGa marketplace.
+        </p>
+
+        <div id="signup-message" class="message"
+             role="status" aria-live="polite" hidden></div>
+
+        <form id="customer-signup-form" class="admin-login-form">
+            <div id="signup-details">
+                <div class="field">
+                    <label for="customer-name">Full name</label>
+                    <input id="customer-name" name="name" type="text"
+                           minlength="2" maxlength="120"
+                           autocomplete="name" required
+                           placeholder="Enter your full name">
+                </div>
+
+                <div class="field">
+                    <label for="customer-signup-email">Email address</label>
+                    <input id="customer-signup-email" name="email"
+                           type="email" maxlength="254"
+                           autocomplete="email" required
+                           placeholder="you@example.com">
+                </div>
+
+                <div class="field">
+                    <label for="customer-signup-password">Password</label>
+                    <input id="customer-signup-password" name="password"
+                           type="password" minlength="12" maxlength="128"
+                           autocomplete="new-password" required
+                           placeholder="At least 12 characters">
+                    <small>Use a strong password with at least 12 characters.</small>
+                </div>
+
+                <div class="field">
+                    <label for="customer-confirm-password">Confirm password</label>
+                    <input id="customer-confirm-password" type="password"
+                           minlength="12" maxlength="128"
+                           autocomplete="new-password" required
+                           placeholder="Enter your password again">
+                </div>
+            </div>
+
+            <button id="customer-signup-button" type="submit"
+                    class="button button-primary button-full">
+                Send verification code
+            </button>
+        </form>
+
+        <p class="admin-login-note">
+            Already have an account?
+            <a class="admin-marketplace-link"
+               href="/customer/login">Sign in</a>
+        </p>
+        <a href="/" class="admin-marketplace-link">Return to marketplace</a>
+    </section>
+{% endblock %}

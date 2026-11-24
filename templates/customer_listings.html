@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}My Advertisements | AbbiKayGa{% endblock %}
+{% block robots %}<meta name="robots" content="noindex, nofollow">{% endblock %}
+{% block head_extra %}
+    <script src="{{ url_for('static', path='/js/customer-listings.js') }}" defer></script>
+{% endblock %}
+{% block main_class %}section customer-listings-page{% endblock %}
+{% block navigation %}
+    <a href="/customer/profile">My profile</a>
+    <a href="/">Marketplace</a>
+    <button id="customer-listings-logout"
+            type="button"
+            class="button button-secondary">
+        Log out
+    </button>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="customer-listings-heading">
+            <span class="eyebrow">YOUR ACCOUNT</span>
+            <h1>My Advertisements</h1>
+            <p>Track your advertisements and their approval status.</p>
+        </div>
+
+        <div class="customer-listings-toolbar">
+            <div class="field">
+                <label for="customer-listings-status">Filter by status</label>
+                <select id="customer-listings-status">
+                    <option value="">Active and past advertisements</option>
+                    <option value="pending">Pending review</option>
+                    <option value="approved">Approved</option>
+                    <option value="rejected">Rejected</option>
+                    <option value="removed">Removed</option>
+                </select>
+            </div>
+
+            <button id="customer-listings-refresh"
+                    type="button"
+                    class="button button-secondary">
+                Refresh
+            </button>
+        </div>
+
+        <div id="customer-listings-message"
+             class="message message-error"
+             role="alert"
+             aria-live="polite"
+             hidden></div>
+
+        <div id="customer-listings-count"
+             class="customer-listings-count">
+            Loading your advertisements...
+        </div>
+
+        <div id="customer-listings-grid"
+             class="customer-listings-grid"
+             aria-live="polite"></div>
+
+        <div id="customer-listings-empty"
+             class="customer-listings-empty"
+             hidden>
+            <div class="empty-icon" aria-hidden="true">◇</div>
+            <h2>No advertisements found</h2>
+            <p>Your advertisements will appear here after you submit them.</p>
+            <a href="/#post-ad" class="button button-primary">
+                Post an advertisement
+            </a>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,27 @@
+
+@'
+# Secrets and environment settings
+.env
+.env.*
+!.env.example
+
+# Python virtual environment and caches
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Uploaded files and generated test images
+media/
+fake_image.jpg
+oversized_test.jpg
+test_listing.webp
+
+# Editor and operating system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+'@ | Set-Content -Path .gitignore -Encoding utf8
+
+Get-Content .gitignore

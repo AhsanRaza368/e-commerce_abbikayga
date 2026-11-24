@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="{% block theme_color %}#173447{% endblock %}">
+    {% block robots %}{% endblock %}
+    {% block referrer %}{% endblock %}
+    {% block description %}{% endblock %}
+    <title>{% block title %}AbbiKayGa{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}">
+    <script src="{{ url_for('static', path='/js/site.js') }}" defer></script>
+    {% block head_extra %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="site-header">
+        <nav class="navbar container" aria-label="Main navigation">
+            <a class="brand" href="/" aria-label="AbbiKayGa home">
+                <span class="brand-mark" aria-hidden="true">A</span>
+                <span>AbbiKayGa<span class="brand-period">.</span></span>
+            </a>
+            <div class="nav-links">
+                {% block navigation %}
+                    <a href="/">Marketplace</a>
+                {% endblock %}
+            </div>
+        </nav>
+    </header>
+
+    <main id="main-content" class="{% block main_class %}{% endblock %}">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <a class="brand footer-brand" href="/">
+                <span class="brand-mark" aria-hidden="true">A</span>
+                <span>AbbiKayGa<span class="brand-period">.</span></span>
+            </a>
+            {% block footer_description %}
+                <p>A local marketplace to buy, sell, and give things away.</p>
+            {% endblock %}
+            <span class="copyright">
+                © <span id="current-year"></span> AbbiKayGa
+            </span>
+        </div>
+    </footer>
+</body>
+</html>

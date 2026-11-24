@@ -1,0 +1,342 @@
+{% extends "base.html" %}
+
+{% block title %}AbbiKayGa | Local Marketplace{% endblock %}
+{% block description %}
+    <meta name="description"
+          content="Buy, sell, and give away items locally with AbbiKayGa.">
+{% endblock %}
+{% block theme_color %}#142b3b{% endblock %}
+{% block head_extra %}
+    <script src="{{ url_for('static', path='/js/app.js') }}" defer></script>
+{% endblock %}
+{% block navigation %}
+    <a href="#browse">Browse ads</a>
+    <a href="#post-ad" class="nav-post-button" hidden>+ Post an ad</a>
+    <div id="customer-auth-area" class="customer-auth-area">
+        <a href="/customer/login" class="customer-nav-link">Sign in</a>
+        <a href="/customer/signup" class="customer-nav-button">Create account</a>
+    </div>
+{% endblock %}
+{% block footer_description %}
+    <p>A local marketplace to buy, sell, and give things away.</p>
+{% endblock %}
+
+{% block content %}
+        <section class="hero">
+            <div class="container hero-content">
+                <span class="eyebrow">YOUR LOCAL MARKETPLACE</span>
+                <h1>Good finds.<br><span>Great new beginnings.</span></h1>
+                <p>Buy what you need, sell what you don't, or give something away.</p>
+
+                <a class="button button-primary hero-button" href="#browse">
+                    Explore marketplace <span aria-hidden="true">↓</span>
+                </a>
+
+                <div class="hero-points">
+                    <span>✓ No buyer account required</span>
+                    <span>✓ Local listings</span>
+                    <span>✓ Free giveaways</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="browse" class="browse-section section">
+            <div class="container">
+                <div class="section-heading">
+                    <div>
+                        <span class="eyebrow">FIND YOUR NEXT DEAL</span>
+                        <h2>Explore advertisements</h2>
+                        <p>Search approved listings from your local community.</p>
+                    </div>
+                </div>
+
+                <form id="search-form" class="search-panel">
+                    <div class="field search-keyword">
+                        <label for="keyword">What are you looking for?</label>
+                        <input
+                            id="keyword"
+                            name="keyword"
+                            type="search"
+                            placeholder="e.g. Toyota Corolla"
+                        >
+                    </div>
+
+                    <div class="field">
+                        <label for="city">City</label>
+                        <input
+                            id="city"
+                            name="city"
+                            type="text"
+                            placeholder="e.g. Lahore"
+                        >
+                    </div>
+
+                    <div class="field">
+                        <label for="category-filter">Category</label>
+                        <select id="category-filter" name="category_id">
+                            <option value="">All categories</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="type-filter">Listing type</label>
+                        <select id="type-filter" name="listing_type">
+                            <option value="">All listings</option>
+                            <option value="sale">For sale</option>
+                            <option value="free">Free giveaways</option>
+                        </select>
+                    </div>
+
+                    <div class="search-actions">
+                        <button type="submit" class="button button-primary">
+                            Search
+                        </button>
+                        <button type="reset" id="reset-search" class="button button-secondary">
+                            Clear
+                        </button>
+                    </div>
+                </form>
+
+                <div id="category-chips" class="category-chips"
+                     aria-label="Browse categories"></div>
+
+                <div class="results-toolbar">
+                    <h3>Available near you</h3>
+                    <span id="results-count" class="results-count">Loading ads...</span>
+                </div>
+
+                <div id="listing-grid" class="listing-grid"
+                     aria-live="polite">
+                    <div class="loading-message">Loading advertisements...</div>
+                </div>
+
+                <div id="empty-state" class="empty-state" hidden>
+                    <div class="empty-icon" aria-hidden="true">⌕</div>
+                    <h3>No advertisements found</h3>
+                    <p>Try another keyword, city, or category.</p>
+                    <button type="button" id="empty-reset"
+                            class="button button-secondary">
+                        Clear filters
+                    </button>
+                </div>
+
+                <div id="listing-error" class="message message-error" hidden
+                     role="alert"></div>
+            </div>
+        </section>
+
+        <section id="post-ad" class="post-section section" hidden>
+            <div class="container post-layout">
+                <div class="post-intro">
+                    <span class="eyebrow">YOUR NEXT STEP</span>
+                    <h2>Have something to sell?</h2>
+                    <p>Give your item a second life. Post an advertisement for sale or offer it to someone for free.</p>
+
+                    <div class="post-benefit">
+                        <span class="benefit-icon" aria-hidden="true">01</span>
+                        <div>
+                            <h3>Describe your item</h3>
+                            <p>Add a title, price, location, and contact details.</p>
+                        </div>
+                    </div>
+
+                    <div class="post-benefit">
+                        <span class="benefit-icon" aria-hidden="true">02</span>
+                        <div>
+                            <h3>Add up to 3 photos</h3>
+                            <p>Show visitors the actual item you're offering.</p>
+                        </div>
+                    </div>
+
+                    <div class="post-benefit">
+                        <span class="benefit-icon" aria-hidden="true">03</span>
+                        <div>
+                            <h3>Submit for review</h3>
+                            <p>Your advertisement will be reviewed before publication.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="create-listing-form" class="form-card">
+                    <div class="form-card-heading">
+                        <h3>Post an advertisement</h3>
+                        <p>Fields marked * are required.</p>
+                    </div>
+
+                    <div id="create-listing-message" class="message" hidden
+                         role="status"></div>
+
+                    <div class="field">
+                        <label for="ad-title">Advertisement title *</label>
+                        <input id="ad-title" name="title" type="text"
+                               maxlength="150" required
+                               placeholder="e.g. Toyota Corolla 2018">
+                    </div>
+
+                    <div class="field">
+                        <label for="ad-description">Description *</label>
+                        <textarea id="ad-description" name="description"
+                                  rows="4" required
+                                  placeholder="Describe the item, its condition, and other important details."></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="field">
+                            <label for="ad-category">Category *</label>
+                            <select id="ad-category" name="category_id" required>
+                                <option value="">Choose a category</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="ad-type">Offer type *</label>
+                            <select id="ad-type" name="listing_type" required>
+                                <option value="sale">For sale</option>
+                                <option value="free">Free giveaway</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="field" id="price-field">
+                            <label for="ad-price">Price (PKR) *</label>
+                            <input id="ad-price" name="price" type="number"
+                                   min="0" step="0.01" required
+                                   placeholder="e.g. 250000">
+                        </div>
+
+                        <div class="field">
+                            <label for="ad-condition">Condition *</label>
+                            <select id="ad-condition" name="condition" required>
+                                <option value="new">New</option>
+                                <option value="good" selected>Good</option>
+                                <option value="fair">Fair</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="field">
+                            <label for="ad-city">City *</label>
+                            <input id="ad-city" name="city" type="text"
+                                   required placeholder="e.g. Lahore">
+                        </div>
+
+                        <div class="field">
+                            <label for="ad-location">Area / location *</label>
+                            <input id="ad-location" name="location_details"
+                                   type="text" required
+                                   placeholder="e.g. Johar Town">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="seller-name">Your name *</label>
+                        <input id="seller-name" name="seller_name"
+                               type="text" required placeholder="Seller name">
+                    </div>
+
+                    <div class="field">
+                        <label for="seller-phone">Contact phone *</label>
+                        <input id="seller-phone" name="seller_phone"
+                               type="tel" required inputmode="tel"
+                               placeholder="03XXXXXXXXX">
+                        <small>Your contact number will be visible on the approved advertisement.</small>
+                    </div>
+
+                    <div class="field">
+                        <label for="ad-images">Photos (up to 3)</label>
+                        <input id="ad-images" name="images" type="file"
+                               accept="image/jpeg,image/png,image/webp"
+                               multiple>
+                        <small>JPEG, PNG, or WebP. Maximum 5 MB per image.</small>
+                        <div id="selected-images" class="selected-images"></div>
+                    </div>
+
+                    <button id="submit-listing-button" type="submit"
+                            class="button button-primary button-full">
+                        Submit advertisement
+                    </button>
+
+                    <p class="form-note">
+                        No customer account is required. Your advertisement
+                        will remain pending until an administrator approves it.
+                    </p>
+                </form>
+            </div>
+        </section>
+
+        <section class="trust-strip">
+            <div class="container trust-content">
+                <div>
+                    <span class="trust-symbol" aria-hidden="true">✓</span>
+                    <div>
+                        <h3>Reviewed advertisements</h3>
+                        <p>Listings are moderated before publication.</p>
+                    </div>
+                </div>
+                <div>
+                    <span class="trust-symbol" aria-hidden="true">♡</span>
+                    <div>
+                        <h3>Give items away</h3>
+                        <p>Help useful things find a new home.</p>
+                    </div>
+                </div>
+                <div>
+                    <span class="trust-symbol" aria-hidden="true">⌖</span>
+                    <div>
+                        <h3>Search by location</h3>
+                        <p>Find items in your preferred city.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    <dialog id="listing-dialog" class="listing-dialog">
+        <div class="dialog-header">
+            <span class="eyebrow">ADVERTISEMENT DETAILS</span>
+            <button type="button" id="close-dialog"
+                    class="dialog-close" aria-label="Close">×</button>
+        </div>
+
+        <div id="dialog-content" class="dialog-content"></div>
+
+        <section id="report-section" class="report-section" hidden>
+            <h3>Report this advertisement</h3>
+            <p>Tell us why you think this advertisement should be reviewed.</p>
+
+            <form id="report-form">
+                <div class="field">
+                    <label for="report-reason">Reason *</label>
+                    <select id="report-reason" name="reason" required>
+                        <option value="Suspicious or misleading listing">Suspicious or misleading listing</option>
+                        <option value="Fraud or scam">Fraud or scam</option>
+                        <option value="Incorrect information">Incorrect information</option>
+                        <option value="Prohibited item">Prohibited item</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="report-details">Details *</label>
+                    <textarea id="report-details" name="details"
+                              rows="3" required
+                              placeholder="Explain the problem."></textarea>
+                </div>
+
+                <div class="field">
+                    <label for="report-contact">Your contact (optional)</label>
+                    <input id="report-contact" name="reporter_contact"
+                           type="text" placeholder="Email or phone">
+                </div>
+
+                <button type="submit" class="button button-primary button-full">
+                    Submit report
+                </button>
+            </form>
+
+            <div id="report-message" class="message" hidden
+                 role="status"></div>
+        </section>
+    </dialog>
+
+{% endblock %}
